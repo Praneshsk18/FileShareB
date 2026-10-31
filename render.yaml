@@ -1,0 +1,49 @@
+# ==============================================================================
+# Render Blueprint Specification (Infrastructure-as-Code)
+# Documentation: https://render.com/docs/blueprint-spec
+# ==============================================================================
+services:
+  - type: web
+    name: file-sharing-service
+    runtime: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    healthCheckPath: /v3/api-docs
+    envVars:
+      # Database Connection (Supabase / Neon / Render PostgreSQL)
+      - key: DB_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_DRIVER
+        value: org.postgresql.Driver
+
+      # Backblaze B2 / AWS S3 Configuration
+      - key: B2_BUCKET_NAME
+        sync: false
+      - key: B2_ENDPOINT
+        sync: false
+      - key: B2_REGION
+        sync: false
+      - key: B2_KEY_ID
+        sync: false
+      - key: B2_APPLICATION_KEY
+        sync: false
+
+      # JWT Secret (Render can generate a secure secret automatically)
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION_MS
+        value: "86400000"
+
+      # Allowed CORS Origins (e.g. https://your-frontend.vercel.app)
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+
+      # Production settings
+      - key: SWAGGER_ENABLED
+        value: "true"
+      - key: SPRING_JPA_SHOW_SQL
+        value: "false"

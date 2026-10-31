@@ -1,0 +1,38 @@
+# Build outputs and temporary caches
+target/
+*.class
+
+# Environment files with sensitive credentials
+.env
+.env.*
+!.env.example
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# IDE and Editor configurations
+.idea/
+.settings/
+.project/
+.classpath/
+.factorypath/
+.metadata/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Logs and local artifacts
+*.log
+logs/
+
+# Maven wrapper files (not needed inside pre-configured Maven container)
+.mvn/
+mvnw
+mvnw.cmd
+
+# Documentation and markdown files
+HELP.md
+README.md
