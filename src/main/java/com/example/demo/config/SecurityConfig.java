@@ -64,7 +64,18 @@ public class SecurityConfig {
 				.filter(s -> !s.isEmpty())
 				.toList();
 
-		config.setAllowedOrigins(origins);
+		// Support origin patterns so any preview or production Vercel deployment works
+		for (String origin : origins) {
+			if (origin.equals("*")) {
+				config.addAllowedOriginPattern("*");
+			} else {
+				config.addAllowedOrigin(origin);
+			}
+		}
+		// Also allow any vercel.app preview deployments
+		config.addAllowedOriginPattern("https://*-*.vercel.app");
+		config.addAllowedOriginPattern("https://*.vercel.app");
+
 		config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"));
 		config.setAllowedHeaders(List.of(
 				HttpHeaders.AUTHORIZATION,
